@@ -1,0 +1,37 @@
+{% extends 'layout.html' %}
+
+{% block title %}All Users{% endblock title %}
+
+{% block content %}
+    <div class="d-flex justify-content-between">
+        <div class="card bg-dark mb-5 px-4 pb-4">
+            <div class="card-header text-primary text-center">
+                <h2>New User</h2>
+            </div>
+            <div class="card-body">
+                <form action="/new_user" method="post">
+                    <div class="mb-3">
+                        <label for="first_name" class="form-label text-white">First Name:</label>
+                        <input type="text" name="first_name" id="first_name" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label for="last_name" class="form-label text-white">Last Name:</label>
+                        <input type="text" name="last_name" id="last_name" class="form-control">
+                    </div>
+                    <input type="submit" value="Add" class="btn btn-primary text-dark">
+                </form>
+            </div>
+        </div>
+        <div class="card bg-dark mb-5 px-4 pb-4">
+            <div class="card-header text-primary text-center">
+                <h2>All Users</h2>
+            </div>
+            <div class="card-body">
+                {% for user in users %}
+                    <p><a href="/users/{{ user.id }}" class="link-custom">{{ user.first_name }} {{ user.last_name }}</a></p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <p><a href="/books">Add Book</a></p>
+{% endblock content %}

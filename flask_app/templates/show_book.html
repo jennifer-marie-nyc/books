@@ -1,0 +1,48 @@
+{% extends 'layout.html' %}
+
+{% block title %} Show Users {% endblock title %}
+
+{% block content %}
+    
+<div class="d-flex justify-content-between">
+    <div class="card mb-5 px-4 pb-4">
+        <div class="card-header text-primary text-center">
+            <h2>Title: {{ book.title }}</h2>
+        </div>
+        <div class="card-body">
+            {% if book.favorites|length > 0 %}
+                <h4>Favorited by:</h4>
+                {% for favorite in book.favorites %}
+                    <p>{{ favorite.first_name }} {{ favorite.last_name }}</p>
+                {% endfor %}
+            {% else %}
+                <p>No users have favorited this book yet.</p>
+            {% endif %}
+            
+        </div>
+    </div>
+    <div class="card bg-dark mb-5 px-4 pb-4">
+        <div class="card-header text-primary text-center">
+            <h2>Add to user favorites</h2>
+        </div>
+        <div class="card-body">
+            <form action="/favorites/create" method="post">
+                <input type="hidden" name="book_id" value="{{ book.id }}">
+                <input type="hidden" name="redirect" value="books">
+                <div class="mb-3">
+                    <label for="favorite" class="form-label text-white">User:</label>
+                    <select name="user_id" id="favorite" class="form-select">
+                        {% for user in users_not_favorited %}
+                            <option value="{{ user.id }}">{{ user.first_name }} {{ user.last_name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <input type="submit" value="Add" class="btn btn-primary text-dark">
+            </form>
+        </div>
+    </div>
+</div>
+<p><a href="/users">Home</a></p>
+
+{% endblock content %}
+

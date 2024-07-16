@@ -1,0 +1,60 @@
+{% extends 'layout.html' %}
+
+{% block title %} Show Users {% endblock title %}
+
+{% block content %}
+    
+<div class="d-flex justify-content-between">
+    <div class="card mb-5 px-4 pb-4">
+        <div class="card-header text-primary text-center">
+            <h2>{{ user.first_name }} {{ user.last_name }}'s Favorites</h2>
+        </div>
+        <div class="card-body">
+            {% if user.favorites|length > 0 %}
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th># of Pages</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for favorite in user.favorites %}
+                        <tr>
+                            <td>{{ favorite.title }}</td>
+                            <td>{{ favorite.num_of_pages }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <p>This user has not favorited any books yet.</p>
+            {% endif %}
+            
+        </div>
+    </div>
+    <div class="card bg-dark mb-5 px-4 pb-4">
+        <div class="card-header text-primary text-center">
+            <h2>Add favorite</h2>
+        </div>
+        <div class="card-body">
+            <form action="/favorites/create" method="post">
+                <input type="hidden" name="user_id" value="{{ user.id }}">
+                <input type="hidden" name="redirect" value="users">
+                <div class="mb-3">
+                    <label for="favorite" class="form-label text-white">Book:</label>
+                    <select name="book_id" id="favorite" class="form-select">
+                        {% for book in books_not_favorited %}
+                            <option value="{{ book.id }}">{{ book.title }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <input type="submit" value="Add" class="btn btn-primary text-dark">
+            </form>
+        </div>
+    </div>
+</div>
+<p><a href="/users">Home</a></p>
+
+{% endblock content %}
+

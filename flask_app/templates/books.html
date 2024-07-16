@@ -1,0 +1,37 @@
+{% extends 'layout.html' %}
+
+{% block title %}All Users{% endblock title %}
+
+{% block content %}
+    <div class="d-flex justify-content-between">
+        <div class="card bg-dark mb-5 px-4 pb-4">
+            <div class="card-header text-primary text-center">
+                <h2>New Book</h2>
+            </div>
+            <div class="card-body">
+                <form action="/new_book" method="post">
+                    <div class="mb-3">
+                        <label for="title" class="form-label text-white">Title:</label>
+                        <input type="text" name="title" id="title" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label for="num_of_pages" class="form-label text-white">Pages:</label>
+                        <input type="text" name="num_of_pages" id="num_of_pages" class="form-control">
+                    </div>
+                    <input type="submit" value="Add" class="btn btn-primary text-dark">
+                </form>
+            </div>
+        </div>
+        <div class="card bg-dark mb-5 px-4 pb-4">
+            <div class="card-header text-primary text-center">
+                <h2>All Books</h2>
+            </div>
+            <div class="card-body">
+                {% for book in books %}
+                    <p><a href="/books/{{ book.id }}" class="link-custom">{{ book.title }}</a></p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <p><a href="/users">Home</a></p>
+{% endblock content %}
